@@ -16,9 +16,6 @@
     "@oclif/dev-cli": "^1.17.0",
     "globby": "^8.0.1"
   },
-  "engines": {
-    "node": ">=8.0.0"
-  },
   "files": [
     "/bin",
     "/npm-shrinkwrap.json",
@@ -26,9 +23,6 @@
     "/src"
   ],
   "homepage": "https://github.com/lqmanh/influxdb-benchmarks",
-  "keywords": [
-    "oclif"
-  ],
   "license": "MIT",
   "main": "src/index.js",
   "oclif": {
@@ -40,8 +34,8 @@
   },
   "repository": "lqmanh/influxdb-benchmarks",
   "scripts": {
-    "postpack": "rm -f oclif.manifest.json",
     "prepack": "oclif-dev manifest && oclif-dev readme",
+    "postpack": "rm -f oclif.manifest.json",
     "test": "echo NO TESTS",
     "version": "oclif-dev readme && git add README.md"
   }
