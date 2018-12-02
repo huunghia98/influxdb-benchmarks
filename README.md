@@ -3,10 +3,8 @@ influxdb-benchmarks
 
 InfluxDB benchmarks
 
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/influxdb-benchmarks.svg)](https://npmjs.org/package/influxdb-benchmarks)
-[![Downloads/week](https://img.shields.io/npm/dw/influxdb-benchmarks.svg)](https://npmjs.org/package/influxdb-benchmarks)
 [![License](https://img.shields.io/npm/l/influxdb-benchmarks.svg)](https://github.com/lqmanh/influxdb-benchmarks/blob/master/package.json)
+[![Version](https://img.shields.io/npm/v/influxdb-benchmarks.svg)](https://npmjs.org/package/influxdb-benchmarks)
 
 <!-- toc -->
 * [Usage](#usage)
@@ -28,26 +26,47 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`influxdb-benchmarks hello`](#influxdb-benchmarks-hello)
+* [`influxdb-benchmarks delete DBMS`](#influxdb-benchmarks-delete-dbms)
+* [`influxdb-benchmarks get-data`](#influxdb-benchmarks-get-data)
 * [`influxdb-benchmarks help [COMMAND]`](#influxdb-benchmarks-help-command)
+* [`influxdb-benchmarks insert DBMS`](#influxdb-benchmarks-insert-dbms)
 
-## `influxdb-benchmarks hello`
+## `influxdb-benchmarks delete DBMS`
 
-Describe the command here
+Delete data from InfluxDB or MySQL
 
 ```
 USAGE
-  $ influxdb-benchmarks hello
+  $ influxdb-benchmarks delete DBMS
+
+ARGUMENTS
+  DBMS  (influxdb|mysql) Database management system
 
 OPTIONS
-  -n, --name=name  name to print
-
-DESCRIPTION
-  ...
-  Extra documentation goes here
+  -h, --help               show CLI help
+  -n, --nrecords=nrecords  [default: 1] number of records
+  -o, --optimized          execute in optimization mode
+  -v, --version            show CLI version
+  --db=db                  [default: system-usage] database name
 ```
 
-_See code: [src/commands/hello.js](https://github.com/lqmanh/influxdb-benchmarks/blob/v0.0.0/src/commands/hello.js)_
+_See code: [src/commands/delete.js](https://github.com/lqmanh/influxdb-benchmarks/blob/v0.0.0/src/commands/delete.js)_
+
+## `influxdb-benchmarks get-data`
+
+Get data sample
+
+```
+USAGE
+  $ influxdb-benchmarks get-data
+
+OPTIONS
+  -h, --help               show CLI help
+  -n, --nrecords=nrecords  [default: 1] number of records
+  -v, --version            show CLI version
+```
+
+_See code: [src/commands/get-data.js](https://github.com/lqmanh/influxdb-benchmarks/blob/v0.0.0/src/commands/get-data.js)_
 
 ## `influxdb-benchmarks help [COMMAND]`
 
@@ -65,4 +84,25 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.4/src/commands/help.ts)_
+
+## `influxdb-benchmarks insert DBMS`
+
+Insert data into InfluxDB or MySQL
+
+```
+USAGE
+  $ influxdb-benchmarks insert DBMS
+
+ARGUMENTS
+  DBMS  (influxdb|mysql) Database management system
+
+OPTIONS
+  -h, --help               show CLI help
+  -n, --nrecords=nrecords  [default: 1] number of records
+  -o, --optimized          execute in optimization mode
+  -v, --version            show CLI version
+  --db=db                  [default: system-usage] database name
+```
+
+_See code: [src/commands/insert.js](https://github.com/lqmanh/influxdb-benchmarks/blob/v0.0.0/src/commands/insert.js)_
 <!-- commandsstop -->
