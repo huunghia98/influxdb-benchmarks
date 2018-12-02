@@ -1,7 +1,7 @@
 const si = require('systeminformation')
 
+const constants = require('../constants')
 
-const BUFFER = 1000
 
 module.exports = class Handler {
   constructor(dbClient) {
@@ -35,8 +35,8 @@ module.exports = class Handler {
   async insert(nrecords, options={}) {
     if (options.optimized) {
       let i
-      for (i = 0; i < nrecords; i += BUFFER) await this.insertMany(BUFFER)
-      await this.insertMany(BUFFER - (i - nrecords))
+      for (i = 0; i < nrecords; i += constants.BUFFER) await this.insertMany(constants.BUFFER)
+      await this.insertMany(constants.BUFFER - (i - nrecords))
     } else {
       for (let i = 0; i < nrecords; ++i) await this.insertOne()
     }
