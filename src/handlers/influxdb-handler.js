@@ -27,4 +27,11 @@ module.exports = class InfluxdbHandler extends Handler {
     }
     await this.dbClient.writePoints(data)
   }
+
+  async delete() {
+    await this.dbClient.dropSeries({
+      measurement: (m) => m.name('current-load'),
+      where: (e) => e.tag('host').equals.value('localhost')
+    })
+  }
 }

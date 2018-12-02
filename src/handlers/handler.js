@@ -42,7 +42,7 @@ module.exports = class Handler {
     }
   }
 
-  async delete(nrecords, options={}) {
-    //
+  async delete() {
+    // need overriding
   }
 }

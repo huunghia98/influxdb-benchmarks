@@ -11,7 +11,7 @@ class Delete extends Command {
     const { args, flags } = this.parse(Delete)
     const handler = new InfluxdbHandler(new InfluxdbClient(flags.db))
     const timer = new ExecutionTimer()
-    const time = await timer.measure(handler.delete, [flags.nrecords, { optimized: flags.optimized }])
+    const time = await timer.measure(handler.delete)
     console.log(`Execution time: ${prettyTime(time, 'micro')}`)
   }
 }
@@ -31,12 +31,6 @@ Delete.flags = {
   version: flags.version({ char: 'v' }),
   help: flags.help({ char: 'h' }),
   db: flags.string({ description: 'database name', default: 'system-usage' }),
-  nrecords: flags.integer({ char: 'n', description: 'number of records', default: 1 }),
-  optimized: flags.boolean({
-    char: 'o',
-    description: 'execute in optimization mode',
-    default: false,
-  }),
 }
 
 
