@@ -11,7 +11,7 @@ class GetData extends Command {
     const handler = new Handler(null)
     const timer = new ExecutionTimer()
     const time = await timer.measure(async () => {
-      for (let i = 0; i < flags.nrecords; ++i) await handler.getCurrentLoad()
+      for (let i = 0; i < flags.nrecords; ++i) await handler.systemUsage.export()
     })
     console.log(`Execution time: ${prettyTime(time, 'micro')}`)
   }

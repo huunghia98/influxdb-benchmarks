@@ -1,27 +1,14 @@
-const si = require('systeminformation')
-
 const constants = require('../constants')
+const SystemUsage = require('../system-usage')
 
 
 module.exports = class Handler {
   constructor(dbClient) {
     this.dbClient = dbClient
+    this.systemUsage = new SystemUsage()
 
     this.insert = this.insert.bind(this)
     this.delete = this.delete.bind(this)
-  }
-
-  async getCurrentLoad() {
-    try {
-      const data = await si.currentLoad()
-      return {
-        load: data.currentload,
-        loadUser: data.currentload_user,
-        loadSystem: data.currentload_system,
-      }
-    } catch (err) {
-      return null
-    }
   }
 
   async insertOne() {
@@ -34,12 +21,17 @@ module.exports = class Handler {
 
   async insert(nrecords, options={}) {
     if (options.optimized) {
-      let i
-      for (i = 0; i < nrecords; i += constants.BUFFER) await this.insertMany(constants.BUFFER)
-      await this.insertMany(constants.BUFFER - (i - nrecords))
+      const buffer = constants.BUFFER
+      if (nrecords <= buffer) await this.insertMany(nrecords)
+      else {
+        let i
+        for (i = 0; i < nrecords; i += buffer) await this.insertMany(buffer)
+        await this.insertMany(nrecords + buffer - i)
+      }
     } else {
       for (let i = 0; i < nrecords; ++i) await this.insertOne()
     }
+    console.log(`Inserted ${nrecords} records in total`)
   }
 
   async delete() {
