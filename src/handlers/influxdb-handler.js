@@ -22,8 +22,7 @@ module.exports = class InfluxdbHandler extends Handler {
       data.push({
         measurement: 'current-load',
         tags: { host: 'localhost' },
-        fields: datum,
-        timestamp: new Date()
+        fields: datum
       })
     }
     await this.dbClient.writePoints(data)

@@ -2,17 +2,27 @@ const { Command, flags } = require('@oclif/command')
 const prettyTime = require('pretty-time')
 
 const InfluxdbClient = require('../database-clients/influxdb')
+const MysqlClient = require('../database-clients/mysql')
 const InfluxdbHandler = require('../handlers/influxdb-handler')
+const MysqlHandler = require('../handlers/mysql-handler')
 const ExecutionTimer = require('../execution-timer')
 
 
 class Delete extends Command {
   async run() {
     const { args, flags } = this.parse(Delete)
-    const handler = new InfluxdbHandler(new InfluxdbClient(flags.db))
+    let dbClient, handler
+    if (args.dbms === 'influxdb') {
+      dbClient = new InfluxdbClient(flags.db)
+      handler = new InfluxdbHandler(dbClient)
+    } else {
+      dbClient = new MysqlClient(flags.db)
+      handler = new MysqlHandler(dbClient)
+    }
     const timer = new ExecutionTimer()
     const time = await timer.measure(handler.delete)
     console.log(`Execution time: ${prettyTime(time, 'micro')}`)
+    if (args.dbms === 'mysql') dbClient.close()
   }
 }
 
