@@ -33,11 +33,11 @@ module.exports = class InfluxdbHandler extends Handler {
       data.push(...datum)
     }
     await this.dbClient.writePoints(data)
+    console.log(`Inserted ${buffer} records`)
   }
 
   async delete() {
     await this.dbClient.dropSeries({
-      measurement: (m) => m.name('cpu-load'),
       where: (e) => e.tag('host').equals.value('localhost')
     })
   }

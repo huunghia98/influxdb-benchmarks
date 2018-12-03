@@ -36,9 +36,15 @@ module.exports = class InfluxdbHandler extends Handler {
     }
     await this.dbClient.CpuLoadSchema.bulkCreate(cpuLoadData)
     await this.dbClient.MemSchema.bulkCreate(memData)
+    console.log(`Inserted ${buffer} records`)
   }
 
   async delete() {
-    //
+    await this.dbClient.CpuLoadSchema.destroy({
+      where: { host: 'localhost' }
+    })
+    await this.dbClient.MemSchema.destroy({
+      where: { host: 'localhost' }
+    })
   }
 }

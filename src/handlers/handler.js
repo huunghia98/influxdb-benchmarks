@@ -31,6 +31,7 @@ module.exports = class Handler {
     } else {
       for (let i = 0; i < nrecords; ++i) await this.insertOne()
     }
+    console.log(`Inserted ${nrecords} records in total`)
   }
 
   async delete() {
