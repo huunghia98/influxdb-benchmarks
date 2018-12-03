@@ -6,31 +6,38 @@ module.exports = class InfluxdbHandler extends Handler {
     super(dbClient)
   }
 
+  async getDatum() {
+    const datum = await this.systemUsage.export()
+    return [
+      {
+        measurement: 'cpu-load',
+        tags: { host: 'localhost' },
+        fields: datum.cpuLoad
+      },
+      {
+        measurement: 'mem',
+        tags: { host: 'localhost' },
+        fields: datum.mem
+      }
+    ]
+  }
+
   async insertOne() {
-    const datum = await this.getCurrentLoad()
-    await this.dbClient.writePoints([{
-      measurement: 'current-load',
-      tags: { host: 'localhost' },
-      fields: datum
-    }])
+    await this.dbClient.writePoints(await this.getDatum())
   }
 
   async insertMany(buffer) {
     let data = []
     for (let i = 0; i < buffer; ++i) {
-      const datum = await this.getCurrentLoad()
-      data.push({
-        measurement: 'current-load',
-        tags: { host: 'localhost' },
-        fields: datum
-      })
+      const datum = await this.getDatum()
+      data.push(...datum)
     }
     await this.dbClient.writePoints(data)
   }
 
   async delete() {
     await this.dbClient.dropSeries({
-      measurement: (m) => m.name('current-load'),
+      measurement: (m) => m.name('cpu-load'),
       where: (e) => e.tag('host').equals.value('localhost')
     })
   }

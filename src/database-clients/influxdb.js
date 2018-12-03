@@ -3,14 +3,25 @@ const influx = require('influx')
 
 const schemas = [
   {
-    measurement: 'current-load',
+    measurement: 'cpu-load',
     fields: {
       load: influx.FieldType.FLOAT,
       loadUser: influx.FieldType.FLOAT,
       loadSystem: influx.FieldType.FLOAT,
     },
     tags: ['host']
-  }
+  },
+  {
+    measurement: 'mem',
+    fields: {
+      total: influx.FieldType.INTEGER,
+      free: influx.FieldType.INTEGER,
+      used: influx.FieldType.INTEGER,
+      active: influx.FieldType.INTEGER,
+      buffcache: influx.FieldType.INTEGER,
+    },
+    tags: ['host']
+  },
 ]
 
 
