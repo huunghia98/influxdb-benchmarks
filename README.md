@@ -43,11 +43,9 @@ ARGUMENTS
   DBMS  (influxdb|mysql) Database management system
 
 OPTIONS
-  -h, --help               show CLI help
-  -n, --nrecords=nrecords  [default: 1] number of records
-  -o, --optimized          execute in optimization mode
-  -v, --version            show CLI version
-  --db=db                  [default: system-usage] database name
+  -h, --help     show CLI help
+  -v, --version  show CLI version
+  --db=db        [default: system-usage] database name
 ```
 
 _See code: [src/commands/delete.js](https://github.com/lqmanh/influxdb-benchmarks/blob/v0.0.0/src/commands/delete.js)_
