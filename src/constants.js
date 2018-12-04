@@ -1,3 +1,3 @@
 module.exports = {
-  BUFFER: 5000,
+  BUFFER: 10000,
 }

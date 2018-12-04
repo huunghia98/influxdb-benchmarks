@@ -8,12 +8,16 @@ module.exports = class InfluxdbHandler extends Handler {
 
   getDatum() {
     const datum = this.systemUsage.export()
+    const hrTime = process.hrtime()
+    const timestamp = hrTime[0] * 1000000 + Math.round(hrTime[1] / 1000) // microseconds
     return [
       {
+        timestamp,
         host: 'localhost',
         ...datum.cpuLoad
       },
       {
+        timestamp,
         host: 'localhost',
         ...datum.mem
       }

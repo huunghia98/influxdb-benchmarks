@@ -25,8 +25,9 @@ module.exports = class Handler {
       if (nrecords <= buffer) await this.insertMany(nrecords)
       else {
         let i
-        for (i = 0; i < nrecords; i += buffer) await this.insertMany(buffer)
-        await this.insertMany(nrecords + buffer - i)
+        const maxi = nrecords - buffer
+        for (i = 0; i < maxi; i += buffer) await this.insertMany(buffer)
+        await this.insertMany(nrecords - i)
       }
     } else {
       for (let i = 0; i < nrecords; ++i) await this.insertOne()
