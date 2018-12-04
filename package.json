@@ -1,7 +1,7 @@
 {
   "name": "influxdb-benchmarks",
   "description": "InfluxDB benchmarks",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Luong Quang Manh @lqmanh",
   "bin": {
     "influxdb-benchmarks": "./bin/run"
