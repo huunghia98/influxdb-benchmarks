@@ -6,19 +6,19 @@ module.exports = class MysqlClient extends Sequelize {
     super(dbName, 'root', process.env.MYSQL_ROOT_PW, { dialect: 'mysql', logging: false })
 
     this.CpuLoadSchema = this.define('cpuLoad', {
-      timestamp: { type: Sequelize.BIGINT, primaryKey: true },
+      timestamp: { type: Sequelize.BIGINT.UNSIGNED, primaryKey: true },
       host: Sequelize.STRING,
-      loadAvg1: Sequelize.DOUBLE,
-      loadAvg5: Sequelize.DOUBLE,
-      loadAvg15: Sequelize.DOUBLE,
+      loadAvg1: Sequelize.DOUBLE.UNSIGNED,
+      loadAvg5: Sequelize.DOUBLE.UNSIGNED,
+      loadAvg15: Sequelize.DOUBLE.UNSIGNED,
     }, { freezeTableName: true, timestamps: false })
 
     this.MemSchema = this.define('mem', {
-      timestamp: { type: Sequelize.BIGINT, primaryKey: true },
+      timestamp: { type: Sequelize.BIGINT.UNSIGNED, primaryKey: true },
       host: Sequelize.STRING,
-      total: Sequelize.INTEGER,
-      used: Sequelize.INTEGER,
-      free: Sequelize.INTEGER,
+      total: Sequelize.INTEGER.UNSIGNED,
+      used: Sequelize.INTEGER.UNSIGNED,
+      free: Sequelize.INTEGER.UNSIGNED,
     }, { freezeTableName: true, timestamps: false })
 
     this.sync()
