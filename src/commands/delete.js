@@ -11,18 +11,12 @@ const ExecutionTimer = require('../execution-timer')
 class Delete extends Command {
   async run() {
     const { args, flags } = this.parse(Delete)
-    let dbClient, handler
-    if (args.dbms === 'influxdb') {
-      dbClient = new InfluxdbClient(flags.db)
-      handler = new InfluxdbHandler(dbClient)
-    } else {
-      dbClient = new MysqlClient(flags.db)
-      handler = new MysqlHandler(dbClient)
-    }
+    let handler
+    if (args.dbms === 'influxdb') handler = new InfluxdbHandler(new InfluxdbClient(flags.db))
+    else handler = new MysqlHandler(new MysqlClient(flags.db))
     const timer = new ExecutionTimer()
     const time = await timer.measure(handler.delete)
     console.log(`Execution time: ${prettyTime(time, 'micro')}`)
-    if (args.dbms === 'mysql') dbClient.close()
   }
 }
 
@@ -40,7 +34,7 @@ Delete.args = [
 Delete.flags = {
   version: flags.version({ char: 'v' }),
   help: flags.help({ char: 'h' }),
-  db: flags.string({ description: 'database name', default: 'system-usage' }),
+  db: flags.string({ description: 'database name', default: 'systemusage' }),
 }
 
 

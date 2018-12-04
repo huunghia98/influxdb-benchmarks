@@ -6,11 +6,11 @@ module.exports = class InfluxdbHandler extends Handler {
     super(dbClient)
   }
 
-  async getDatum() {
-    const datum = await this.systemUsage.export()
+  getDatum() {
+    const datum = this.systemUsage.export()
     return [
       {
-        measurement: 'cpu-load',
+        measurement: 'cpuLoad',
         tags: { host: 'localhost' },
         fields: datum.cpuLoad
       },
@@ -23,16 +23,21 @@ module.exports = class InfluxdbHandler extends Handler {
   }
 
   async insertOne() {
-    await this.dbClient.writePoints(await this.getDatum())
+    const datum = this.getDatum()
+    await this.dbClient.writePoints(datum[0])
+    await this.dbClient.writePoints(datum[1])
   }
 
   async insertMany(buffer) {
-    let data = []
+    let cpuLoadData = []
+    let memData = []
     for (let i = 0; i < buffer; ++i) {
-      const datum = await this.getDatum()
-      data.push(...datum)
+      const datum = this.getDatum()
+      cpuLoadData.push(datum[0])
+      memData.push(datum[1])
     }
-    await this.dbClient.writePoints(data)
+    await this.dbClient.writePoints(cpuLoadData)
+    await this.dbClient.writePoints(memData)
     console.log(`Inserted ${buffer} records`)
   }
 

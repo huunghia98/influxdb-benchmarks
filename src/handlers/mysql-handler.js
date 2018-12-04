@@ -6,8 +6,8 @@ module.exports = class InfluxdbHandler extends Handler {
     super(dbClient)
   }
 
-  async getDatum() {
-    const datum = await this.systemUsage.export()
+  getDatum() {
+    const datum = this.systemUsage.export()
     return [
       {
         host: 'localhost',
@@ -21,7 +21,7 @@ module.exports = class InfluxdbHandler extends Handler {
   }
 
   async insertOne() {
-    const datum = await this.getDatum()
+    const datum = this.getDatum()
     await this.dbClient.CpuLoadSchema.create(datum[0])
     await this.dbClient.MemSchema.create(datum[1])
   }
@@ -30,7 +30,7 @@ module.exports = class InfluxdbHandler extends Handler {
     let cpuLoadData = []
     let memData = []
     for (let i = 0; i < buffer; ++i) {
-      const datum = await this.getDatum()
+      const datum = this.getDatum()
       cpuLoadData.push(datum[0])
       memData.push(datum[1])
     }
