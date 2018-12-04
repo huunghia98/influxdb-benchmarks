@@ -9,6 +9,7 @@ module.exports = class Handler {
 
     this.insert = this.insert.bind(this)
     this.delete = this.delete.bind(this)
+    this.query = this.query.bind(this)
   }
 
   async insertOne() {
@@ -36,6 +37,10 @@ module.exports = class Handler {
   }
 
   async delete() {
+    // need overriding
+  }
+
+  async query() {
     // need overriding
   }
 }

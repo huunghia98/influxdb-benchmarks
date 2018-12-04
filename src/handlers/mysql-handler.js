@@ -51,4 +51,15 @@ module.exports = class InfluxdbHandler extends Handler {
       where: { host: 'localhost' }
     })
   }
+
+  async query() {
+    await this.dbClient.query(
+      'select max(loadAvg1) from cpuLoad',
+      { type: this.dbClient.QueryTypes.SELECT }
+    )
+    await this.dbClient.query(
+      'select * from mem where used > total/2 order by timestamp desc',
+      { type: this.dbClient.QueryTypes.SELECT }
+    )
+  }
 }
