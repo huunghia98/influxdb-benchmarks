@@ -8,21 +8,21 @@ const MysqlHandler = require('../handlers/mysql-handler')
 const ExecutionTimer = require('../execution-timer')
 
 
-class Delete extends Command {
+class Query extends Command {
   async run() {
-    const { args, flags } = this.parse(Delete)
+    const { args, flags } = this.parse(Query)
     let handler
     if (args.dbms === 'influxdb') handler = new InfluxdbHandler(new InfluxdbClient(flags.db))
     else handler = new MysqlHandler(new MysqlClient(flags.db))
     const timer = new ExecutionTimer()
-    const time = await timer.measure(handler.delete)
+    const time = await timer.measure(handler.query)
     console.log(`Execution time: ${prettyTime(time, 'micro')}`)
   }
 }
 
-Delete.description = `Delete data from InfluxDB or MySQL`
+Query.description = `Query data from InfluxDB or MySQL`
 
-Delete.args = [
+Query.args = [
   {
     name: 'dbms',
     required: true,
@@ -31,11 +31,11 @@ Delete.args = [
   },
 ]
 
-Delete.flags = {
+Query.flags = {
   version: flags.version({ char: 'v' }),
   help: flags.help({ char: 'h' }),
   db: flags.string({ description: 'database name', default: 'systemusage' }),
 }
 
 
-module.exports = Delete
+module.exports = Query
