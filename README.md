@@ -45,3 +45,9 @@ COMMANDS
   insert    Insert data into InfluxDB or MySQL
   query     Query data from InfluxDB or MySQL
 ```
+
+***Notice**: You need to set the environment variable `MYSQL_ROOT_PW` to your root user password of MySQL.*
+```
+$ env MYSQL_ROOT_PW='mypassword'
+$ ./bin/run insert mysql -n 1000000 -o
+```

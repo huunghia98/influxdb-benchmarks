@@ -3,7 +3,7 @@ const Sequelize = require('sequelize')
 
 module.exports = class MysqlClient extends Sequelize {
   constructor(dbName) {
-    super(dbName, 'root', process.env.MYSQL_ROOT_PW || '#08L05q98M*Maria', { dialect: 'mysql', logging: false })
+    super(dbName, 'root', process.env.MYSQL_ROOT_PW, { dialect: 'mysql', logging: false })
 
     this.CpuLoadSchema = this.define('cpuLoad', {
       timestamp: { type: Sequelize.BIGINT, primaryKey: true },
