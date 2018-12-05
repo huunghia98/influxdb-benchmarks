@@ -51,6 +51,6 @@ module.exports = class InfluxdbHandler extends Handler {
 
   async query() {
     await this.dbClient.queryRaw('select max(loadAvg1) from cpuLoad')
-    await this.dbClient.queryRaw('select * from mem where used > total/2 order by time desc')
+    await this.dbClient.queryRaw('select count(used) from mem where used > total/2 order by time desc')
   }
 }

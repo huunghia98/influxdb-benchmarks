@@ -58,7 +58,7 @@ module.exports = class InfluxdbHandler extends Handler {
       { type: this.dbClient.QueryTypes.SELECT }
     )
     await this.dbClient.query(
-      'select * from mem where used > total/2 order by timestamp desc',
+      'select count(used) from mem where used > total/2 order by timestamp desc',
       { type: this.dbClient.QueryTypes.SELECT }
     )
   }
